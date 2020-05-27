@@ -1,6 +1,9 @@
 #include"auxiliary.h"
 #include<iostream>
 #include<string>
+#include<fstream>
+#include<map>
+#include<vector>
 
 //合法的命令集
 const std::string ValidCmd = "iedptqIEDPTQ";
@@ -42,4 +45,47 @@ bool CheckCommand(const std::string& cmd)//检查命令合法性
 	}
 
 	return true;
+}
+
+void ProcessText(std::map<char, size_t>& count_char)//处理文本
+{
+	//已经通过命令I初始化过了，无需再读取文件初始化
+	if (count_char.size() != 0)
+		return;
+
+	//处理文本并给字符计数
+	std::fstream source("ToBeTran.txt", std::fstream::in);
+	if (source.fail())
+	{
+		std::cerr << "ToBeTran.txt can't open.I/O stream is in badbit/failbit." << std::endl;
+		std::cout << "Process terminated.Please enter any key to quit." << std::endl;
+		getchar();
+		exit(0);
+	}
+	char ch;
+	while (source.peek() != EOF)
+	{
+		source.get(ch);
+		++count_char[ch];
+	}
+
+	//将哈夫曼树信息放到文件hfmTree.txt里
+	std::ofstream ofs("hfmTree.txt");
+	std::map<char, size_t>::iterator itmp = count_char.begin();
+	while (itmp != count_char.end())
+	{
+		if (itmp->first == ' ')
+		{
+			ofs << "char: Space, " <<  "num: " << itmp->second << std::endl;
+		}
+		else if (itmp->first == '\n')
+		{
+			ofs << "char: " << "Enter, "<< "num: " << itmp->second << std::endl;
+		}
+		else
+		{
+			ofs << "char: " << itmp->first << "， " << "num: " << itmp->second << std::endl;
+		}
+		++itmp;
+	}
 }

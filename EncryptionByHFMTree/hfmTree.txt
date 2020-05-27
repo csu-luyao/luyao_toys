@@ -1,0 +1,9 @@
+char: Enter, num: 2
+char: Space , num: 19
+char: a£¬ num: 1
+char: b£¬ num: 2
+char: c£¬ num: 3
+char: d£¬ num: 4
+char: e£¬ num: 5
+char: h£¬ num: 9
+char: o£¬ num: 8

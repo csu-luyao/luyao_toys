@@ -145,6 +145,10 @@
     <ClInclude Include="auxiliary.h" />
     <ClInclude Include="HFMTree.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="hfmTree.txt" />
+    <Text Include="ToBeTran.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
