@@ -58,7 +58,7 @@ void CMDQ_Quit()
 
 //用初始化命令的方式建立哈夫曼树
 void CMDI_Initialization(std::map<char, size_t>& count_char, 
-	std::map<size_t, std::string> char_code, Node* root)
+	std::map<size_t, std::string>& char_code, Node* root)
 {
 	char c;
 	std::cout << "Please enter amount of chars: ";
@@ -116,7 +116,7 @@ int stoint(std::string s)
 }
 
 //读取文本的方式建立哈夫曼树
-void CMDE_Code(std::map<char, size_t>& count_char, std::map<size_t, std::string> char_code,Node* root)//处理文本
+void CMDE_Code(std::map<char, size_t>& count_char, std::map<size_t, std::string>& char_code,Node* root)//处理文本
 {
 	//内存里没有哈夫曼树，从hfmTree里读入
 	if (!havetree)
@@ -127,7 +127,8 @@ void CMDE_Code(std::map<char, size_t>& count_char, std::map<size_t, std::string>
 			char s1;
 			std::string s2;
 			ifhfm >> s1 >> s2;
-			count_char[s1] = stoint(s2);
+			if(stoint(s2) > 0)
+				count_char[s1] = stoint(s2) > count_char[s1] ? stoint(s2) : count_char[s1];
 			ifhfm >> s2;
 		}
 
@@ -187,7 +188,7 @@ void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char,
 		//哈夫曼树已经初始化过了
 		if (flag_init)
 		{
-			std::cout << "HFMTree has been initializated by CMD_E.Don't use ToBeTran.txt to initializate again!\n";
+			std::cout << "HFMTree has been initializated by CMD_E.Don't  initializate again!\n";
 		}
 		else 
 		{
@@ -195,17 +196,10 @@ void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char,
 			flag_init = true;
 		}
 	}
-	else if (cmd == "E" || cmd == "e")
+	if (cmd == "E" || cmd == "e")
 	{
-		if (flag_init)
-		{
-			std::cout << "HFMTree has been initializated by CMD_I.Don't initializate again!\n";
-		}
-		else
-		{
 			CMDE_Code(count_char,code_char,root);
 			flag_init = true;
-		}
 	}
 	else if (cmd == "Q" || cmd == "q")
 	{
