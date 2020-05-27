@@ -18,7 +18,7 @@ HuffmanTree::HuffmanTree(std::map<char,size_t> char_count)
         nodes.pop();
     }
     std::map<char, size_t>::iterator itmp = char_count.begin();
-    for (int i = 0; i < char_count.size(); ++i)
+    for (size_t i = 0; i < char_count.size(); ++i)
     {
         nodes.push(new Node(itmp->second));
         ++itmp;
@@ -29,7 +29,7 @@ HuffmanTree::HuffmanTree(std::map<char,size_t> char_count)
 //HFM的折构函数
 HuffmanTree::~HuffmanTree()
 {
-    destroyTree(root);
+
 }
 
 //建立哈夫曼树

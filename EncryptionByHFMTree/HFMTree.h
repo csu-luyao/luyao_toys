@@ -41,12 +41,6 @@ public:
     Node* create();
     //进行哈夫曼编码
     void encode(Node* node, std::string code, std::map<size_t, std::string>& char_code);
-    //遍历
-    void preOrder(Node* root);
-    void inOrder(Node* root);
-    void postOrder(Node* root);
-    //销毁
-    void destroyTree(Node* root);
 };
 
 #endif

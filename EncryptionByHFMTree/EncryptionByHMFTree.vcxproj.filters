@@ -18,18 +18,18 @@
     <ClCompile Include="main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="auxiliary.cpp">
+    <ClCompile Include="HFMTree.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="HFMTree.cpp">
+    <ClCompile Include="pro_function.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auxiliary.h">
+    <ClInclude Include="HFMTree.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="HFMTree.h">
+    <ClInclude Include="pro_function.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

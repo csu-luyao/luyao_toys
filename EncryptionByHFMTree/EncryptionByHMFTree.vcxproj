@@ -138,12 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="auxiliary.cpp" />
+    <ClCompile Include="pro_function.cpp" />
     <ClCompile Include="HFMTree.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="auxiliary.h" />
+    <ClInclude Include="pro_function.h" />
     <ClInclude Include="HFMTree.h" />
   </ItemGroup>
   <ItemGroup>

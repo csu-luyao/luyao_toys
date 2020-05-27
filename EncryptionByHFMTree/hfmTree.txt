@@ -1,5 +1,4 @@
-char: a num: 1
-char: b num: 2
-char: c num: 5
-char: d num: 4
-char: e num: 3
+a 1 110
+b 2 111
+c 3 10
+d 4 0
