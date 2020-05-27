@@ -7,27 +7,16 @@
 
 std::string cmd;
 std::map<char, size_t> count_char;
+std::map<size_t, std::string> char_code;
+bool flag_init = false;
+HuffmanTree hfmt(count_char);
 
 int main(void)
 {
 	ShowMenu();
-	ReadCommand(cmd);
-	ProcessText(count_char);
-	std::map<char, size_t>::iterator itmp = count_char.begin();
-	while (itmp != count_char.end())
+	while (true)
 	{
-		if (itmp->first == ' ')
-		{
-			std::cout << "char: Space" << itmp->first << "\n" << "num: " << itmp->second << std::endl;
-		}
-		else if (itmp->first == '\n')
-		{
-			std::cout << "char: " << "Enter" << "\n" << "num: " << itmp->second << std::endl;
-		}
-		else
-		{
-			std::cout << "char: " << itmp->first << "\n" << "num: " << itmp->second << std::endl;
-		}
-		++itmp;
+		ReadCommand(cmd);
+		RunCMD(cmd,count_char,flag_init);
 	}
 }

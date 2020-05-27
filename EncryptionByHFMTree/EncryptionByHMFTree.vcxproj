@@ -139,6 +139,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="auxiliary.cpp" />
+    <ClCompile Include="HFMTree.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +147,7 @@
     <ClInclude Include="HFMTree.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="CodeFile.txt" />
     <Text Include="hfmTree.txt" />
     <Text Include="ToBeTran.txt" />
   </ItemGroup>

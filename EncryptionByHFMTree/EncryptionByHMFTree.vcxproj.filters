@@ -21,6 +21,9 @@
     <ClCompile Include="auxiliary.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="HFMTree.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="auxiliary.h">
@@ -35,6 +38,9 @@
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="hfmTree.txt">
+      <Filter>资源文件</Filter>
+    </Text>
+    <Text Include="CodeFile.txt">
       <Filter>资源文件</Filter>
     </Text>
   </ItemGroup>
