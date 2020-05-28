@@ -148,9 +148,11 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="CodeFile.txt" />
+    <Text Include="CodePrint.txt" />
     <Text Include="hfmTree.txt" />
     <Text Include="TextFile.txt" />
     <Text Include="ToBeTran.txt" />
+    <Text Include="TreePrint.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

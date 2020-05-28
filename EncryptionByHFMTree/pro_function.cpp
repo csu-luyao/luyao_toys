@@ -167,6 +167,7 @@ void CMDE_Code(std::map<char, size_t>& count_char,
 void CMDP_Print(std::map<char, size_t>& count_char, std::map<size_t, std::string>& char_code)
 {
 	std::ifstream iftran("ToBeTran.txt");
+	std::ofstream ofs("CodePrint.txt");
 	int i = 0;
 	while (iftran.peek() != EOF)
 	{
@@ -176,10 +177,12 @@ void CMDP_Print(std::map<char, size_t>& count_char, std::map<size_t, std::string
 		if (i + encode.size() <= 50)
 		{
 			std::cout << encode;
+			ofs << encode;
 			i += encode.size();
 			if (i == 50)
 			{
 				std::cout << std::endl;
+				ofs << std::endl;
 				i = 0;
 			}
 		}
@@ -187,11 +190,14 @@ void CMDP_Print(std::map<char, size_t>& count_char, std::map<size_t, std::string
 		{
 			int temp = 50 - i;
 			std::cout << encode.substr(0, temp) << std::endl;
+			ofs << encode.substr(0, temp) << std::endl;
 			std::cout << encode.substr(temp);
+			ofs << encode.substr(temp);
 			i = encode.substr(temp).size();
 		}
 	}
 	std::cout << std::endl;
+	ofs << std::endl;
 }
 
 //判断是不是哈夫曼树的叶子节点
@@ -204,8 +210,8 @@ bool isleaf(Node* node)
 	return false;
 }
 
-//根据权值找字符
-char SearchChar(std::map<char, size_t>& count_char,
+//根据编码找字符
+char SearchCharByCode(std::map<char, size_t>& count_char,
 	std::map <size_t, std::string>& code_char, std::string s)
 {
 	std::map <size_t, std::string>::iterator itmp = code_char.begin();
@@ -228,6 +234,20 @@ char SearchChar(std::map<char, size_t>& count_char,
 	return 0;
 }
 
+//根据权值找字符
+char SearchCharByWeight(std::map<char, size_t>& count_char,int weight)
+{
+	std::map<char, size_t>::iterator it = count_char.begin();
+	while (it != count_char.end())
+	{
+		if (it->second == weight)
+			return it->first;
+		++it;
+	}
+	std::cout << "Error: Char can't be searched by weight!" << std::endl;
+	return 0;
+}
+
 //对CodeFile文件内容进行译码
 void CMDD_Decode(std::map<char, size_t>& count_char,std::map <size_t, std::string>& code_char)
 {
@@ -240,7 +260,7 @@ void CMDD_Decode(std::map<char, size_t>& count_char,std::map <size_t, std::strin
 		ifs >> ch;
 		s += ch;
 		std::cout << "s = " << s << std::endl;
-		char temp = SearchChar(count_char,code_char, s);
+		char temp = SearchCharByCode(count_char,code_char, s);
 		std::cout << "temp = " << temp << std::endl;
 		if ( temp != 0)
 		{
@@ -249,6 +269,25 @@ void CMDD_Decode(std::map<char, size_t>& count_char,std::map <size_t, std::strin
 		}
 	}
 	std::cout << "Encoding completed!Result has been put in TextFile.txt." << std::endl;
+}
+
+void CMDT_TreePrinting(std::map<char, size_t>& count_char, Node* p, std::string s,std::ofstream& ofs)
+{
+	if (p == NULL)
+		return;
+	s += "   ";
+	CMDT_TreePrinting(count_char,p->right, s,ofs);
+	if (!isleaf(p))
+	{
+		std::cout << s << p->val << std::endl;
+		ofs << s << p->val << std::endl;
+	}
+	else
+	{
+		std::cout << s << p->val << "[" << SearchCharByWeight(count_char,p->val) << "]" << std::endl;
+		ofs << s << p->val << "[" << SearchCharByWeight(count_char, p->val) << "]" << std::endl;
+	}
+	CMDT_TreePrinting(count_char,p->left, s,ofs);
 }
 
 //显示字符哈夫曼编码键-值
@@ -320,6 +359,12 @@ void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char,
 		{
 			std::cout << "Please enter I or E to initializate first!" << std::endl;
 		}
+	}
+	else if (cmd == "T" || cmd == "t")
+	{
+		std::string s = "";
+		std::ofstream ofs("TreePrint.txt");
+		CMDT_TreePrinting(count_char,root,s,ofs);
 	}
 	else if (cmd == "Q" || cmd == "q")
 	{
