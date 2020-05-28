@@ -1,6 +1,5 @@
-﻿  main.cpp
-  pro_function.cpp
-C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\pro_function.cpp(111,20): warning C4018: “<”: 有符号/无符号不匹配
-C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\pro_function.cpp(131,33): warning C4018: “>”: 有符号/无符号不匹配
-  正在生成代码...
+﻿  pro_function.cpp
+C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\pro_function.cpp(63,20): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\pro_function.cpp(120,20): warning C4018: “<”: 有符号/无符号不匹配
+C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\pro_function.cpp(141,33): warning C4018: “>”: 有符号/无符号不匹配
   EncryptionByHMFTree.vcxproj -> C:\Users\15218\Desktop\luyao_toys\EncryptionByHFMTree\Debug\EncryptionByHMFTree.exe

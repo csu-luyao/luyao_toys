@@ -50,23 +50,32 @@ bool CheckCommand(const std::string& cmd)//检查命令合法性
 	return true;
 }
 
+//退出命令
 void CMDQ_Quit()
 {
 	std::cout << "Bye!" << std::endl;
 	exit(0);
 }
 
+//检查输入的数目是否全为数字
+bool CheckInt(std::string s)
+{
+	for (int i = 0; i < s.size(); ++i)
+	{
+		char c = s[i];
+		if (!isdigit(c))
+			return false;
+	}
+	return true;
+}
+
 //用初始化命令的方式建立哈夫曼树
 void CMDI_Initialization(std::map<char, size_t>& count_char, 
-	std::map<size_t, std::string>& char_code, Node* root)
+	std::map<size_t, std::string>& char_code, Node*& root)
 {
-	char c;
+	int n;
 	std::cout << "Please enter amount of chars: ";
-	while (std::cin >> c && !isdigit(c))
-	{
-		std::cout << "Please enter a number: ";
-	}
-	int n = c - '0';
+	std::cin >> n;
 	std::cout << "Please enter " << n << " char(s):" << std::endl;
 	for (int i = 0; i < n; ++i)
 	{
@@ -116,7 +125,8 @@ int stoint(std::string s)
 }
 
 //读取文本的方式建立哈夫曼树
-void CMDE_Code(std::map<char, size_t>& count_char, std::map<size_t, std::string>& char_code,Node* root)//处理文本
+void CMDE_Code(std::map<char, size_t>& count_char, 
+	std::map<size_t, std::string>& char_code,Node*& root)//处理文本
 {
 	//内存里没有哈夫曼树，从hfmTree里读入
 	if (!havetree)
@@ -153,6 +163,94 @@ void CMDE_Code(std::map<char, size_t>& count_char, std::map<size_t, std::string>
 	}
 }
 
+//打印编码后的文件
+void CMDP_Print(std::map<char, size_t>& count_char, std::map<size_t, std::string>& char_code)
+{
+	std::ifstream iftran("ToBeTran.txt");
+	int i = 0;
+	while (iftran.peek() != EOF)
+	{
+		char ch;
+		iftran >> ch;
+		std::string encode =  char_code[count_char[ch]];
+		if (i + encode.size() <= 50)
+		{
+			std::cout << encode;
+			i += encode.size();
+			if (i == 50)
+			{
+				std::cout << std::endl;
+				i = 0;
+			}
+		}
+		else if (i + encode.size() > 50)
+		{
+			int temp = 50 - i;
+			std::cout << encode.substr(0, temp) << std::endl;
+			std::cout << encode.substr(temp);
+			i = encode.substr(temp).size();
+		}
+	}
+	std::cout << std::endl;
+}
+
+//判断是不是哈夫曼树的叶子节点
+bool isleaf(Node* node)
+{
+	if (node->left == NULL && node->right == NULL)
+	{
+		return true;
+	}
+	return false;
+}
+
+//根据权值找字符
+char SearchChar(std::map<char, size_t>& count_char,
+	std::map <size_t, std::string>& code_char, std::string s)
+{
+	std::map <size_t, std::string>::iterator itmp = code_char.begin();
+	while (itmp != code_char.end())
+	{
+		if (itmp->second == s)
+		{
+			std::map<char, size_t>::iterator it = count_char.begin();
+			while (it != count_char.end())
+			{
+				if (it->second == itmp->first)
+				{
+					return it->first;
+				}
+				++it;
+			}
+		}
+		++itmp;
+	}
+	return 0;
+}
+
+//对CodeFile文件内容进行译码
+void CMDD_Decode(std::map<char, size_t>& count_char,std::map <size_t, std::string>& code_char)
+{
+	std::ifstream ifs("CodeFile.txt");
+	std::ofstream ofs("TextFile.txt");
+	std::string s;
+	while (ifs.peek() != EOF)
+	{
+		char ch;
+		ifs >> ch;
+		s += ch;
+		std::cout << "s = " << s << std::endl;
+		char temp = SearchChar(count_char,code_char, s);
+		std::cout << "temp = " << temp << std::endl;
+		if ( temp != 0)
+		{
+			ofs << temp;
+			s = "";
+		}
+	}
+	std::cout << "Encoding completed!Result has been put in TextFile.txt." << std::endl;
+}
+
 //显示字符哈夫曼编码键-值
 void DisplayHfmKV(std::map<char, size_t>& count_char,std::map<size_t, std::string>& code_char)
 {
@@ -181,7 +279,7 @@ void DisplayHfmKV(std::map<char, size_t>& count_char,std::map<size_t, std::strin
 
 //执行命令
 void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char, 
-	bool& flag_init, std::map<size_t,std::string>& code_char,Node* root)
+	bool& flag_init, std::map<size_t,std::string>& code_char,Node*& root)
 {
 	if (cmd == "I" || cmd == "i")
 	{
@@ -190,7 +288,7 @@ void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char,
 		{
 			std::cout << "HFMTree has been initializated by CMD_E.Don't  initializate again!\n";
 		}
-		else 
+		else
 		{
 			CMDI_Initialization(count_char, code_char, root);
 			flag_init = true;
@@ -198,8 +296,30 @@ void RunCMD(const std::string& cmd, std::map<char, size_t>& count_char,
 	}
 	if (cmd == "E" || cmd == "e")
 	{
-			CMDE_Code(count_char,code_char,root);
-			flag_init = true;
+		CMDE_Code(count_char,code_char,root);
+		flag_init = true;
+	}
+	else if (cmd == "P" || cmd == "p")
+	{
+		if (flag_init)
+		{
+			CMDP_Print(count_char, code_char);
+		}
+		else
+		{
+			std::cout << "Please enter I or E to initializate first!" << std::endl;
+		}
+	}
+	else if (cmd == "D" || cmd == "d")
+	{
+		if (flag_init) 
+		{
+			CMDD_Decode(count_char,code_char);
+		}
+		else 
+		{
+			std::cout << "Please enter I or E to initializate first!" << std::endl;
+		}
 	}
 	else if (cmd == "Q" || cmd == "q")
 	{

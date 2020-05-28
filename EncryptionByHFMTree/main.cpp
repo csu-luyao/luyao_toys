@@ -8,8 +8,8 @@
 std::string cmd;
 std::map<char, size_t> count_char;
 std::map<size_t, std::string> char_code;
+Node* root;
 bool flag_init = false;
-Node* root = NULL;
 
 int main(void)
 {

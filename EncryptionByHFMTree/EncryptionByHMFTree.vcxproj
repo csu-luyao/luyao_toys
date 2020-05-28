@@ -149,6 +149,7 @@
   <ItemGroup>
     <Text Include="CodeFile.txt" />
     <Text Include="hfmTree.txt" />
+    <Text Include="TextFile.txt" />
     <Text Include="ToBeTran.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
