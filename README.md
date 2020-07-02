@@ -1,4 +1,4 @@
-# luyao_toys
+# toys
 ### There are some school assignments and toys.  
 * **EncryptionByHFMTree** is a project that can encode and decode a text.The following is its functions:
   * I: Initialize. Read the character set size n from the terminal, as well as n characters and n weights, build a Huffman tree, and store it in the file hfmTree.
